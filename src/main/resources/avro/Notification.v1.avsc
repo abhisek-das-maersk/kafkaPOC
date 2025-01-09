@@ -1,0 +1,135 @@
+{
+  "type": "record",
+  "namespace": "com.maersk.notification.avro.ingress",
+  "name": "Notification",
+  "fields": [
+    {
+      "name": "NotificationId",
+      "doc": "Unique identifier of the notification",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      }
+    },
+    {
+      "name": "EventTimestamp",
+      "doc": "Date of event creation",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    },
+    {
+      "name": "System",
+      "type": "string",
+      "doc": "Name of the system where the message originated from (eg. Captain Peter, Mobile Platform, Tenant name or consumer group name, whatever makes sense)"
+    },
+    {
+      "name": "Message",
+      "type": [
+        {
+          "name": "EmailMessage",
+          "type": "record",
+          "fields": [
+            {
+              "name": "TemplateId",
+              "doc": "Identifier of the email template to be used",
+              "type": "string"
+            },
+            {
+              "name": "Recipient",
+              "doc": "Email of the recipient that should receive email with the message",
+              "type": "string"
+            },
+            {
+              "name": "EmailVariables",
+              "doc": "JSON encoded payload for email dynamic variables. For example {'name': 'Surname', 'events': [{...}, ...]}",
+              "aliases": [
+                "variables"
+              ],
+              "type": "string"
+            },
+            {
+              "name": "Attachments",
+              "type": {
+                "type": "array",
+                "items": {
+                  "type": "record",
+                  "name": "Attachment",
+                  "fields": [
+                    {
+                      "name": "Filename",
+                      "type": "string"
+                    },
+                    {
+                      "name": "Content",
+                      "type": "bytes"
+                    },
+                    {
+                      "name": "Type",
+                      "type": [
+                        "null",
+                        "string"
+                      ],
+                      "default": null,
+                      "doc": "Mime type of the file contents"
+                    }
+                  ]
+                }
+              },
+              "default": []
+            }
+          ]
+        },
+        {
+          "name": "WebMessage",
+          "type": "record",
+          "fields": [
+            {
+              "name": "UserName",
+              "doc": "User identifier that is accessing the web (username field from frJwt in local storage)",
+              "type": "string"
+            },
+            {
+              "name": "CustomerCode",
+              "doc": "Customer code that the message should be bound to as part of customer_code + user_id + brand identification contract",
+              "type": "string"
+            },
+            {
+              "name": "Brand",
+              "namespace": "com.maersk.notification.avro.channel",
+              "type": {
+                "type": "enum",
+                "name": "WebChannelBrand",
+                "symbols": [
+                  "MSK",
+                  "SEA",
+                  "MLL"
+                ]
+              }
+            },
+            {
+              "name": "Title",
+              "doc": "Main title of the notification on the notifications page.",
+              "type": "string"
+            },
+            {
+              "name": "Body",
+              "doc": "Body of the notification available after expansion of the notification on the notifications page.",
+              "type": "string"
+            },
+            {
+              "name": "Location",
+              "doc": "Location to be redirected to after clicking on the notification.",
+              "type": [
+                "null",
+                "string"
+              ],
+              "default": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

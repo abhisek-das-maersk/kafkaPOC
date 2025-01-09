@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <mirrors>
+        <mirror>
+            <id>devops-nexus</id>
+            <mirrorOf>*,!confluent</mirrorOf>
+            <name>Main mirror for all devops managed repositories</name>
+            <url>https://tools-nexus.maerskdev.net/repository/maven-group-public/</url>
+        </mirror>
+        <mirror>
+            <id>confluent</id>
+            <mirrorOf>confluent</mirrorOf>
+            <url>https://packages.confluent.io/maven/</url>
+        </mirror>
+    </mirrors>
+</settings>
