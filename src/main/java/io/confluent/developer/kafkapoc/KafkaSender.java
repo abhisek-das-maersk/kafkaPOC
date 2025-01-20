@@ -1,14 +1,12 @@
 package io.confluent.developer.kafkapoc;
 
-import ingress.Notification;
+import com.maersk.notification.avro.ingress.Notification;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-
-
 @Service
 public class KafkaSender {
-  private final KafkaTemplate<String, Notification> kafkaTemplate;
+  private final KafkaTemplate<String, com.maersk.notification.avro.ingress.Notification> kafkaTemplate;
 
   public KafkaSender(KafkaTemplate<String, Notification> kafkaTemplate) {
     this.kafkaTemplate = kafkaTemplate;
